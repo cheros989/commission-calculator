@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Model;
 
 
 class Transaction
 {
+    const TYPE_WITHDRAW = 'withdraw';
+    const TYPE_DEPOSIT = 'deposit';
+
     private string $type;
     private string $currency;
     private float $amount;

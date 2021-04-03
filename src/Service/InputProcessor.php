@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Model\Client;
@@ -37,7 +39,8 @@ class InputProcessor
             $client = $this->getClientFromRow($row);
             $transaction = $this->getTransactionFromRow($row);
             $commissionFee = $this->calculationService->calculateCommissionFee($client, $transaction);
-//            var_dump($commissionFee);
+            var_dump($commissionFee);
+            // Add transaction to client's "history"
             $client->addTransaction($transaction);
         }
 
