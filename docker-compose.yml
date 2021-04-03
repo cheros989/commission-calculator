@@ -1,0 +1,9 @@
+version: '3.9'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - .:/var/task/commision-calculator
+    working_dir: /var/task/commision-calculator
