@@ -58,8 +58,8 @@ class CalculationService implements ICalculationService
             return $carry;
         });
 
-        if ($totalAmountForSameWeek > self::MAX_LIMIT_TRANSACTIONS_AMOUNT_PER_WEEK) {
-            return $this->convertFromBaseCurrency($transaction->getAmount(), $transaction->getCurrency());
+        if ($totalAmountForSameWeek >= self::MAX_LIMIT_TRANSACTIONS_AMOUNT_PER_WEEK) {
+            return $transaction->getAmount();
         }
 
         $currentTransactionAmount = $this->convertTransactionToBaseCurrency($transaction);
