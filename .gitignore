@@ -1,3 +1,6 @@
 vendor/
 .idea/
 .env
+phpunit.xml
+composer.lock
+bin/

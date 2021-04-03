@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\DataProcessor;
 
 use App\Model\Client;
 use App\Model\Transaction;
@@ -11,7 +11,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 
 
-class InputProcessor
+class CsvDataProcessor
 {
     const COLUMN_CLIENT_ID = 'B';
     const COLUMN_CLIENT_TYPE = 'C';

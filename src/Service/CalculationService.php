@@ -15,16 +15,22 @@ class CalculationService implements ICalculationService
 {
     const MAX_LIMIT_TRANSACTIONS_PER_WEEK = 3;
     const MAX_LIMIT_TRANSACTIONS_AMOUNT_PER_WEEK = 1000;
-    const BASE_CURRENCY = 'EUR';
     const DEPOSIT_PERCENTAGE = 0.03;
     const BUSINESS_CLIENT_WITHDRAW_PERCENTAGE = 0.5;
     const PRIVATE_CLIENT_WITHDRAW_PERCENTAGE = 0.3;
 
     private array $rates;
+    private string $baseCurrency;
 
-    public function __construct()
+    /**
+     * CalculationService constructor.
+     * @param array $rates according to the base currency
+     * @param string $baseCurrency
+     */
+    public function __construct(array $rates, string $baseCurrency)
     {
-        $this->rates = json_decode('{"USD":1.1497,"JPY":129.53}', true);
+        $this->rates = $rates;
+        $this->baseCurrency = $baseCurrency;
     }
 
     public function calculateCommissionFee(Client $client, Transaction $transaction): float
@@ -105,14 +111,14 @@ class CalculationService implements ICalculationService
 
     private function convertTransactionToBaseCurrency(Transaction $transaction): float
     {
-        return $transaction->getCurrency() === self::BASE_CURRENCY
+        return $transaction->getCurrency() === $this->baseCurrency
             ? $transaction->getAmount()
             : $transaction->getAmount() / $this->rates[$transaction->getCurrency()];
     }
 
     private function convertFromBaseCurrency(float $amount, string $transactionCurrency): float
     {
-        return $transactionCurrency === self::BASE_CURRENCY
+        return $transactionCurrency === $this->baseCurrency
             ? $amount
             : $amount * $this->rates[$transactionCurrency];
     }

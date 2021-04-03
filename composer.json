@@ -17,6 +17,7 @@
   },
   "require": {
     "php": "7.4.*",
+    "guzzlehttp/guzzle": "^7.3",
     "nesbot/carbon": "^2.46",
     "phpoffice/phpspreadsheet": "^1.17",
     "vlucas/phpdotenv": "^5.3"
