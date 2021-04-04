@@ -1,6 +1,7 @@
 version: '3.9'
 services:
   app:
+    container_name: commission_calculator_php
     build:
       context: .
       dockerfile: docker/Dockerfile

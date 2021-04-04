@@ -2,7 +2,7 @@
 
 ```
 docker-compose up -d
-docker exec -it commission-calculator_app_1 sh
+docker exec -it commission_calculator_php sh
 ```
 Inside docker:
 ```
