@@ -129,8 +129,9 @@ class CalculationServiceTest extends TestCase
             [
                 new Client(5, Client::TYPE_PRIVATE, []),
                 new Transaction(Transaction::TYPE_WITHDRAW, 'JPY', 3_000_000.00, new \DateTime('2016-01-10')),
-                8611.41 // You have 8612, but I count it's incorrect, or your gave not full currency exchange rate.
-                // Please elaborate logic how to get 8612.
+                8611.41 // You have 8612, but can you elaborate how did you get this number, or if you
+                // rounded it, please elaborate why. In task description we have the next:
+                // "Commission fees are rounded up to currency's !decimal! places. For example, 0.023 EUR should be rounded up to 0.03 EUR"
             ],
         ];
     }

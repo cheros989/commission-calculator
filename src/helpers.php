@@ -7,7 +7,8 @@ if (! function_exists('ceil_plus')) {
      * @param int|null $precision
      * @return float
      */
-    function ceil_plus(float $value, ?int $precision = null): float {
+    function ceil_plus(float $value, ?int $precision = null): float
+    {
         if (null === $precision) {
             return (float)ceil($value);
         }

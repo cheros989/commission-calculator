@@ -17,3 +17,4 @@ $calculationService = new \App\Service\CalculationService($rates, $_ENV['BASE_CU
 $inputProcessor = new \App\DataProcessor\CsvDataProcessor($calculationService, $spreadsheet);
 
 $inputProcessor->process();
+$inputProcessor->printResults();

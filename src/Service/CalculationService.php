@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-
 use App\Model\Client;
 use App\Model\Transaction;
 use App\Service\Interfaces\ICalculationService;
 use Carbon\Carbon;
-
 
 class CalculationService implements ICalculationService
 {
@@ -60,7 +58,7 @@ class CalculationService implements ICalculationService
         }
 
         $totalAmountForSameWeek = array_reduce($sameWeekTransactions, function ($carry, Transaction $transaction) {
-            $carry += $this->convertTransactionToBaseCurrency($transaction);
+            $carry += $this->convertToBaseCurrency($transaction->getAmount(), $transaction->getCurrency());
             return $carry;
         });
 
@@ -68,7 +66,7 @@ class CalculationService implements ICalculationService
             return $transaction->getAmount();
         }
 
-        $currentTransactionAmount = $this->convertTransactionToBaseCurrency($transaction);
+        $currentTransactionAmount = $this->convertToBaseCurrency($transaction->getAmount(), $transaction->getCurrency());
         $totalAmount = $totalAmountForSameWeek + $currentTransactionAmount;
         // For transaction exceeded amount limit we should charge only exceeded amount
         if ($totalAmount > self::MAX_LIMIT_TRANSACTIONS_AMOUNT_PER_WEEK) {
@@ -109,11 +107,11 @@ class CalculationService implements ICalculationService
         });
     }
 
-    private function convertTransactionToBaseCurrency(Transaction $transaction): float
+    private function convertToBaseCurrency(float $amount, string $transactionCurrency): float
     {
-        return $transaction->getCurrency() === $this->baseCurrency
-            ? $transaction->getAmount()
-            : $transaction->getAmount() / $this->rates[$transaction->getCurrency()];
+        return $transactionCurrency === $this->baseCurrency
+            ? $amount
+            : $amount / $this->rates[$transactionCurrency];
     }
 
     private function convertFromBaseCurrency(float $amount, string $transactionCurrency): float

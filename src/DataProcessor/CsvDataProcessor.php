@@ -10,7 +10,6 @@ use App\Service\Interfaces\ICalculationService;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 
-
 class CsvDataProcessor
 {
     const COLUMN_CLIENT_ID = 'B';
@@ -23,6 +22,7 @@ class CsvDataProcessor
     private Spreadsheet $spreadsheet;
     private array $clients;
     private ICalculationService $calculationService;
+    private array $results = [];
 
     public function __construct(ICalculationService $calculationService, Spreadsheet $spreadsheet, array $clients = [])
     {
@@ -39,12 +39,19 @@ class CsvDataProcessor
             $client = $this->getClientFromRow($row);
             $transaction = $this->getTransactionFromRow($row);
             $commissionFee = $this->calculationService->calculateCommissionFee($client, $transaction);
-            var_dump($commissionFee);
+            $this->results[] = $commissionFee;
             // Add transaction to client's "history"
             $client->addTransaction($transaction);
         }
 
         return $this->clients;
+    }
+
+    public function printResults()
+    {
+        foreach ($this->results as $result) {
+            print "$result\n";
+        }
     }
 
     private function getClientFromRow(Row $record): Client
