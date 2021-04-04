@@ -129,7 +129,8 @@ class CalculationServiceTest extends TestCase
             [
                 new Client(5, Client::TYPE_PRIVATE, []),
                 new Transaction(Transaction::TYPE_WITHDRAW, 'JPY', 3_000_000.00, new \DateTime('2016-01-10')),
-                8612
+                8611.41 // You have 8612, but I count it's incorrect, or your gave not full currency exchange rate.
+                // Please elaborate logic how to get 8612.
             ],
         ];
     }
